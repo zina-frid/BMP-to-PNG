@@ -4,10 +4,11 @@ from PIL import Image
 
 class Converter:
 
-    def __init__(self, path_link, one_many, re_value):
+    def __init__(self, path_link, one_many, re_value, conv_to):
         self.path_link = path_link
         self.one_many = one_many
         self.re_value = re_value
+        self.conv_to = conv_to
 
     def convert(self):
         if self.one_many == 'y':
@@ -26,7 +27,7 @@ class Converter:
         new_dir = self.path_link[:self.path_link.rfind('.')]
         if self.re_value != -1:
             img = self.resize_image(img)
-        img.save(new_dir + ".png")
+        img.save(new_dir + "." + self.conv_to)
         print("Изображение сохранено!")
 
     def convert_many(self):
@@ -38,5 +39,5 @@ class Converter:
             img = Image.open(self.path_link + "/" + image)
             if self.re_value != -1:
                 img = self.resize_image(img)
-            img.save(new_dir + image[:image.find('.')] + ".png")
+            img.save(new_dir + image[:image.find('.')] + "." + self.conv_to)
         print("Изображения сохранены в папке converted!")
