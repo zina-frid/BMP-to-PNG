@@ -4,10 +4,11 @@ from PIL import Image
 
 class Converter:
 
-    def __init__(self, path_link, one_many, re_value, conv_to):
+    def __init__(self, path_link, one_many, re_value, conv_from, conv_to):
         self.path_link = path_link
         self.one_many = one_many
         self.re_value = re_value
+        self.conv_from = conv_from
         self.conv_to = conv_to
 
     def convert(self):
@@ -31,7 +32,7 @@ class Converter:
         print("Изображение сохранено!")
 
     def convert_many(self):
-        images_list = list(filter(lambda x: x.endswith('.bmp'), os.listdir(self.path_link)))
+        images_list = list(filter(lambda x: x.endswith(self.conv_from), os.listdir(self.path_link)))
         new_dir = self.path_link + "/converted/"
         if not os.path.exists(new_dir):
             os.mkdir(new_dir)
