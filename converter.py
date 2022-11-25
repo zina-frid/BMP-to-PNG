@@ -1,10 +1,13 @@
 import os
+
+import requests
 from PIL import Image
 
 
 class Converter:
 
-    def __init__(self, path_link, one_many, re_value, conv_from, conv_to):
+    def __init__(self, type_way, path_link, one_many, re_value, conv_from, conv_to):
+        self.type_way = type_way
         self.path_link = path_link
         self.one_many = one_many
         self.re_value = re_value
@@ -12,10 +15,13 @@ class Converter:
         self.conv_to = conv_to
 
     def convert(self):
-        if self.one_many == 'y':
-            self.convert_one()
-        else:
-            self.convert_many()
+        if self.type_way == 'u':
+            self.url_image()
+        if self.type_way == 't':
+            if self.one_many == 'y':
+                self.convert_one()
+            else:
+                self.convert_many()
 
     def resize_image(self, img):
         height, width = img.size
@@ -42,3 +48,12 @@ class Converter:
                 img = self.resize_image(img)
             img.save(new_dir + image[:image.find('.')] + "." + self.conv_to)
         print("Изображения сохранены в папке converted!")
+
+    def url_image(self):
+        re = requests.get(self.path_link, stream=True).raw
+        img = Image.open(re)
+        new_dir = os.getcwd()
+        if self.re_value != -1:
+            img = self.resize_image(img)
+        img.save(new_dir + "/new." + self.conv_to)
+        print(f"Изображение сохранено в текущую директорию c именем new.{self.conv_to}!")
