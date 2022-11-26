@@ -52,7 +52,7 @@ $ sudo docker run -it -v /home/:/home/ bmp_to_png
 
 *Пример с сохранением изображения по ссылке в выбранном формате `.bmp` без изменения размера:*
 
-![url_example](src_for_readme/url_example.png)
+![url_example_update](src_for_readme/url_example_update.png)
 
 
 *Пример с обработкой некорректного ввода:*

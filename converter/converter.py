@@ -52,8 +52,18 @@ class Converter:
     def url_image(self):
         re = requests.get(self.path_link, stream=True).raw
         img = Image.open(re)
-        new_dir = os.getcwd()
+        print("Введите путь к папке для сохранения:")
+        new_dir = ""
+        while 1:
+            new_dir = input()
+            if os.path.exists(new_dir):
+                if os.path.isdir(new_dir):
+                    break
+                else:
+                    print("Укажите путь только до папки:")
+            else:
+                print("Путь не найден! Введите существующий путь:")
         if self.re_value != -1:
             img = self.resize_image(img)
         img.save(new_dir + "/new." + self.conv_to)
-        print(f"Изображение сохранено в текущую директорию c именем new.{self.conv_to}!")
+        print(f"Изображение сохранено в выбранную папку c именем new.{self.conv_to}!")
