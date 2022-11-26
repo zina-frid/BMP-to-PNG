@@ -19,7 +19,7 @@
 $ git clone https://github.com/zina-frid/BMP-to-PNG.git
 ```
 ``` console
-$ cd BMP-to-PNG
+$ cd BMP-to-PNG/converter
 ```
 ### ***Обычный запуск***
 
@@ -42,7 +42,7 @@ $ sudo docker run -it -v /home/:/home/ bmp_to_png
 ```
 
 ## Технические требования
-Все необходимые пакеты перечислены в ```requirements.txt```
+Все необходимые пакеты перечислены в ```converter/requirements.txt```
 
 ## Пример запуска сервиса в докере
 
@@ -60,6 +60,6 @@ $ sudo docker run -it -v /home/:/home/ bmp_to_png
 ![error_example](src_for_readme/error_example.png)
 
 
-*Сравнение результата (слева) и исходного изображения (справа), изменен формат и размер:*
+*Сравнение результата (слева) и исходного изображения (справа), изменен формат и разрешение до 40% от исходного:*
 
 ![result_example](src_for_readme/result_example.png)
