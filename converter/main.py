@@ -2,61 +2,94 @@ import os
 import requests
 from converter import Converter
 
-type_way, one_many, path_link, conv_from, conv_to, re_value = "", "", "", "", "", -1
+
+def main():
+    type_way = url_path()
+    one_many, conv_from = "", ""
+    if type_way == 't':
+        one_many = amount_answer()
+        conv_to, conv_from = format_path()
+    else:
+        conv_to = format_link()
+    path_link = take_and_check_path(type_way, one_many, conv_from)
+    re_value = check_resize()
+
+    converter = Converter(type_way, path_link, one_many, re_value, conv_from, conv_to)
+    converter.convert()
 
 
 def url_path():
-    global type_way
     print("Если вы хотите выбрать изображение с компьютера, напишите t, если хотите использовать URL, то напишите u. "
           "[t/u]")
     while 1:
         type_way = input().lower()
-        if type_way == 't' or type_way == 'u':
+        if check_url_path(type_way):
             break
         else:
             print("Некорректный ввод! Введите t или u.")
+    return type_way
 
 
-def check_amount_answer():
-    global one_many
+def check_url_path(type_way):
+    if type_way == 't' or type_way == 'u':
+        return True
+    else:
+        return False
+
+
+def amount_answer():
     print("Вы хотите конвертировать одно изображение? [y/n]")
     while 1:
         one_many = input().lower()
-        if one_many == 'y' or one_many == 'n':
+        if check_amount_answer(one_many):
             break
         else:
             print("Ошибка ввода! Введите y или n.")
+    return one_many
 
 
-def check_format_path():
-    global conv_to, conv_from
+def check_amount_answer(one_many):
+    if one_many == 'y' or one_many == 'n':
+        return True
+    else:
+        return False
+
+
+def format_path():
     print("Через пробел напишиите два формата: из которого хотите конвертировать и в какой хотите конвертировать. "
           "\nДоступные форматы: bmp, png, jpg")
     while 1:
         try:
             conv_from, conv_to = input().lower().split(" ")
-            if (conv_from == "bmp" or conv_from == "png" or conv_from == "jpg") and \
-                    (conv_to == "bmp" or conv_to == "png" or conv_to == "jpg"):
+            if check_format(conv_from, conv_to):
                 break
             else:
                 print("Выберите из доступных форматов. \nДоступные форматы: bmp, png, jpg")
         except Exception:
             print("Введите два формата через пробел. \nДоступные форматы: bmp, png, jpg")
+    return conv_to, conv_from
 
 
-def check_format_link():
-    global conv_to
+def check_format(conv_from, conv_to):
+    if (conv_from == "bmp" or conv_from == "png" or conv_from == "jpg") and (conv_to == "bmp" or conv_to == "png" or conv_to == "jpg"):
+        return True
+    else:
+        return False
+
+
+def format_link():
     print("В каком формате хотите сохранить избражение? \nДоступные форматы: bmp, png, jpg")
     while 1:
         conv_to = input().lower()
-        if conv_to == "bmp" or conv_to == "png" or conv_to == "jpg":
+        if check_format("bmp", conv_to):
             break
         else:
             print("Выберите из доступных форматов. \nДоступные форматы: bmp, png, jpg")
+    return conv_to
 
 
-def take_and_ckeck_path():
-    global path_link
+def take_and_check_path(type_way, one_many, conv_from):
+    path_link = ""
     if type_way == 't':
         if one_many == 'y':
             print("Введите полный путь к изображению, включая его название и расширение:")
@@ -104,10 +137,11 @@ def take_and_ckeck_path():
                     print("Введите корректную ссылку")
             except Exception:
                 print("Введите корректную ссылку")
+    return path_link
 
 
 def check_resize():
-    global re_value
+    re_value = ""
     print("Хотите изменить размер изображения? [y/n]")
     while 1:
         resize = input()
@@ -127,17 +161,8 @@ def check_resize():
             break
         else:
             print("Ошибка ввода! Введите y или n.")
+    return re_value
 
 
 if __name__ == '__main__':
-    url_path()
-    if type_way == 't':
-        check_amount_answer()
-        check_format_path()
-    else:
-        check_format_link()
-    take_and_ckeck_path()
-    check_resize()
-
-    converter = Converter(type_way, path_link, one_many, re_value, conv_from, conv_to)
-    converter.convert()
+    main()
