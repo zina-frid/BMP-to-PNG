@@ -13,8 +13,11 @@ on:
 
 
 jobs:
-  unit_tests_ubuntu:
-    runs-on: ubuntu-latest
+  unit_tests:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3      
       - name: Set up Python 3.9
@@ -27,36 +30,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r converter/requirements.txt
       - name: Test with unittest
-        run: python -m unittest converter/tests.py
-
-  unit_tests_windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3      
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.9"
-
-      - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r converter/requirements.txt
-      - name: Test with unittest
-        run: python -m unittest converter/tests.py
-
-  unit_tests_macos:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3      
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.9"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r converter/requirements.txt
-      - name: Test with unittest
-        run: python -m unittest converter/tests.py
+          cd converter
+          python -m unittest tests.py
