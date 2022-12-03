@@ -1,4 +1,10 @@
 # BMP-to-PNG Converter
+
+Ветка 'main': [![tests](https://github.com/zina-frid/BMP-to-PNG/actions/workflows/converter_ci.yml/badge.svg?branch=main)](https://github.com/zina-frid/BMP-to-PNG/actions/workflows/converter_ci.yml)   
+
+Ветка 'develop': [![tests](https://github.com/zina-frid/BMP-to-PNG/actions/workflows/converter_ci.yml/badge.svg?branch=develop)](https://github.com/zina-frid/BMP-to-PNG/actions/workflows/converter_ci.yml)
+
+
 ## Описание
 Консольная утилита, позволяющая конвертировать изображения из одного формата в другой формат.
 
